@@ -10,6 +10,34 @@ Setiap commit+push = update versi + GitHub Release:
    `https://uploads.github.com/repos/GorilaSalto/KangPOS/releases/{id}/assets?name=...`
 5. Repo: https://github.com/GorilaSalto/KangPOS — release contoh: https://github.com/GorilaSalto/KangPOS/releases/tag/v1.0.1
 
+## Riwayat versi setelah 1.0.0
+
+### v1.0.1 (2026-11-18) — Thunder Client style UI + release automation
+- Refactor UI: `src/providers/sidebar.ts` webview (header ⚡ KANGPOS, tombol New Request, tab
+  Activity/Collections/Env default Activity, filter pill, list aktivitas pill method + URL + time ago)
+- Request panel gaya TC: baris method+URL+Send, toolbar (env + ikon save + Actions), tab
+  `Params/Auth/Headers°/Body/Tests`, tabel "Query Parameters" (checkbox biru, key/value borderless,
+  baris template `parameter|value`), response `Status/Size/Time` berwarna, tab
+  `Response/Headers°/Cookies/Test Results`, body berline-number, filter kanan bawah
+- Save via **Ctrl+S/Cmd+S** (+ ikon save); tombol Save/Save As terpisah dihapus
+- Default headers request baru: `Accept: */*`, `User-Agent: KangPOS(@kangpos)`; auto
+  `Content-Type: application/json` saat method POST (juga fallback di `http.ts`)
+- Icon activity bar: bolt outline (feather zap)
+- `npm run vsix` output dinamis `kangpos-$npm_package_version.vsix`; release GitHub + asset vsix
+- Catatan: ikon activity bar abu-abu = tint VS Code saat panel tidak aktif (normal)
+
+### v1.0.2 (2026-11-18) — autocomplete headers + fix fokus
+- Autocomplete nama header: `HEADER_DEFS` (38 header umum + deskripsi), filter saat mengetik,
+  panah ↑↓/Enter/Esc, klik item; input manual tetap bisa. Dropdown `.hdr-ac` position:fixed
+- Fix fokus (revisi user): saat mengetik karakter pertama di baris template Params/Headers/Form,
+  baris dibuat tapi fokus **tetap di input yang sedang diketik** (`focusAdded`), bukan pindah ke
+  baris berikutnya. `focusTpl` dihapus
+- Param baru via baris template langsung update URL (`serializeUrl`)
+- Konfirmasi: tidak ada tombol Save As tersisa di kode — user perlu install vsix + Reload Window
+  (panel lama masih memuat HTML versi lama)
+- Smoke test: harness DOM shim di `$TMPDIR/kangpos-ui-test/harness.ts` (init, response, saved, error,
+  tab headers, tab body, sidebar 3 tab) — ALL-OK; typecheck PASS
+
 
 ## Ringkasan
 Membangun extension VSCode "kangpos" dari nol: REST client lengkap (collections, environments,
