@@ -123,7 +123,7 @@ export class KangposSidebar implements vscode.WebviewViewProvider {
   }
 }
 
-function sidebarHtml(): string {
+export function sidebarHtml(): string {
   return `<!DOCTYPE html>
 <html>
 <head>
@@ -144,44 +144,52 @@ input {
   background: var(--vscode-input-background, #3c3c3c);
   color: var(--vscode-input-foreground, #cccccc);
   border: 1px solid var(--vscode-input-border, #3c3c3c);
-  border-radius: 12px; padding: 4px 12px; font-size: 12px; outline: none; height: 24px;
+  border-radius: 13px; padding: 4px 14px; font-size: 12px; outline: none; height: 25px;
 }
 input:focus { border-color: var(--accent, #29b6f6); }
 button { font-family: inherit; }
-.actionbar { display: flex; gap: 2px; align-items: center; padding: 6px 8px 2px; }
+.kp-head { display: flex; align-items: center; gap: 7px; padding: 10px 12px 8px; }
+.kp-head .kp-logo { display: inline-flex; color: var(--accent, #29b6f6); }
+.kp-head .kp-logo svg { width: 16px; height: 16px; }
+.kp-title { font-size: 11.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--vscode-sideBar-foreground, #ddd); }
+.kp-spacer { flex: 1; }
 .iconbtn {
-  width: 26px; height: 26px; padding: 0; display: inline-flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; padding: 0; display: inline-flex; align-items: center; justify-content: center;
   background: transparent; border: none; border-radius: 4px; cursor: pointer;
-  color: var(--vscode-sideBar-foreground, #ccc); opacity: 0.85;
+  color: var(--vscode-sideBar-foreground, #ccc); opacity: 0.8;
 }
 .iconbtn:hover { background: rgba(128,128,128,0.22); opacity: 1; }
-.iconbtn svg { width: 16px; height: 16px; }
-.iconbtn.danger:hover { color: #ef5350; }
-.kp-spacer { flex: 1; }
-.kp-tabs { display: flex; gap: 16px; padding: 0 12px; border-bottom: 1px solid rgba(128,128,128,0.25); }
-.kp-tab { padding: 6px 1px 7px; font-size: 12px; cursor: pointer; color: var(--vscode-descriptionForeground, #999); border-bottom: 2px solid transparent; }
+.iconbtn svg { width: 15px; height: 15px; }
+.kp-newreq {
+  display: block; width: calc(100% - 24px); margin: 0 12px 6px; height: 30px;
+  background: var(--accent, #29b6f6); color: #fff; border: none; border-radius: 4px;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+}
+.kp-newreq:hover { filter: brightness(1.08); }
+.kp-tabs { display: flex; gap: 18px; padding: 4px 14px 0; }
+.kp-tab { padding: 7px 1px; font-size: 12.5px; cursor: pointer; color: var(--vscode-descriptionForeground, #999); border-bottom: 2px solid transparent; }
 .kp-tab:hover { color: var(--vscode-sideBar-foreground, #ccc); }
-.kp-tab.active { color: var(--vscode-sideBar-foreground, #fff); border-bottom-color: var(--accent, #29b6f6); font-weight: 600; }
-.filterrow { display: flex; gap: 6px; align-items: center; padding: 8px 10px; }
-.filterrow input { flex: 1; min-width: 0; }
-.filterrow .iconbtn { width: 24px; height: 24px; opacity: 0.7; }
+.kp-tab.active { color: var(--vscode-sideBar-foreground, #fff); border-bottom-color: var(--accent, #29b6f6); }
+.filterrow { padding: 9px 12px 7px; }
+.filterrow input { width: 100%; }
 .content { flex: 1; overflow-y: auto; padding-bottom: 24px; }
-.node { display: flex; align-items: flex-start; gap: 5px; padding: 2px 8px 2px 0; cursor: pointer; }
+.node { padding: 7px 12px; cursor: pointer; }
 .node:hover { background: rgba(128,128,128,0.15); }
-.node .chev { flex: none; width: 14px; height: 18px; display: flex; align-items: center; justify-content: center; opacity: 0.7; padding-top: 2px; }
-.node .chev svg { width: 12px; height: 12px; }
-.node .chev.hidden { visibility: hidden; }
-.node .nicon { flex: none; display: flex; align-items: center; justify-content: center; width: 16px; height: 18px; padding-top: 1px; }
-.node .nicon svg { width: 14px; height: 14px; }
-.nmain { min-width: 0; flex: 1; padding-top: 1px; }
-.nline1 { display: flex; align-items: center; gap: 5px; min-width: 0; }
-.nname { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.aline { display: flex; align-items: center; gap: 7px; min-width: 0; }
+.aurl { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--vscode-sideBar-foreground, #ccc); }
+.atime { color: var(--vscode-descriptionForeground, #8f8f8f); font-size: 11px; margin-top: 2px; }
+.mpill { flex: none; display: inline-block; padding: 0 6px; border-radius: 3px; font-size: 10px; font-weight: 700; line-height: 15px; color: #fff; letter-spacing: 0.3px; }
 .ncount { color: var(--vscode-descriptionForeground, #999); font-size: 11px; flex: none; }
-.nsub { color: var(--vscode-descriptionForeground, #999); font-size: 11px; padding-left: 1px; margin-top: 0; line-height: 1.4; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.mpill { flex: none; display: inline-block; padding: 0 5px; border-radius: 3px; font-size: 9px; font-weight: 700; line-height: 14px; color: #fff; letter-spacing: 0.3px; }
 .envbadge { flex: none; display: inline-block; padding: 0 6px; border-radius: 9px; font-size: 9px; font-weight: 700; line-height: 14px; color: #fff; background: #2e7d32; }
-.group { display: flex; align-items: center; gap: 6px; padding: 6px 10px 3px; color: var(--vscode-descriptionForeground, #999); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
-.group .gcount { font-weight: 400; opacity: 0.8; }
+.trow { display: flex; align-items: center; gap: 6px; padding: 7px 12px; cursor: pointer; }
+.trow:hover { background: rgba(128,128,128,0.15); }
+.trow .chev { flex: none; width: 14px; height: 16px; display: flex; align-items: center; justify-content: center; opacity: 0.7; }
+.trow .chev svg { width: 11px; height: 11px; }
+.trow .chev.hidden { visibility: hidden; }
+.trow .nicon { flex: none; display: flex; align-items: center; justify-content: center; width: 16px; height: 16px; }
+.trow .nicon svg { width: 13px; height: 13px; }
+.tname { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tsub { color: var(--vscode-descriptionForeground, #999); font-size: 11px; flex: none; }
 .kp-hint { color: var(--vscode-descriptionForeground, #888); font-size: 12px; padding: 14px 12px; text-align: center; }
 .kp-hint button { background: var(--vscode-button-background, #0e639c); color: var(--vscode-button-foreground, #fff); border: none; border-radius: 3px; padding: 4px 14px; cursor: pointer; font-size: 12px; margin-top: 8px; }
 .menu { position: fixed; z-index: 999; min-width: 170px; background: var(--vscode-menu-background, #252526); border: 1px solid var(--vscode-menu-border, #454545); border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.45); padding: 4px; }
@@ -196,7 +204,7 @@ button { font-family: inherit; }
 <script>
 var vscode = acquireVsCodeApi();
 var DATA = null;
-var tab = 'collections';
+var tab = 'activity';
 var expanded = {};
 var filter = '';
 var menuEl = null;
@@ -209,8 +217,6 @@ var ICONS = {
   folderplus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><path d="M12 10v6M9 13h6"/></svg>',
   import: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>',
   env: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></svg>',
-  trash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>',
-  filter: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg>',
   chevdown: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>',
   chevright: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>',
   folder: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>',
@@ -275,10 +281,10 @@ function renderCollections() {
   var html = '';
   cols.forEach(function (col) {
     var isOpen = !!expanded[col.id];
-    html += '<div class="node" data-kind="collection" data-id="' + esc(col.id) + '" data-name="' + esc(col.name) + '">' +
+    html += '<div class="trow" data-kind="collection" data-id="' + esc(col.id) + '" data-name="' + esc(col.name) + '">' +
       '<span class="chev" data-act="chev">' + (isOpen ? ICONS.chevdown : ICONS.chevright) + '</span>' +
       '<span class="nicon" style="color:' + ACCENT + '">' + ICONS.bolt + '</span>' +
-      '<span class="nmain"><span class="nline1"><span class="nname">' + esc(col.name) + '</span><span class="ncount">' + col.count + '</span></span></span>' +
+      '<span class="tname" style="flex:1">' + esc(col.name) + '</span><span class="tsub">' + col.count + '</span>' +
     '</div>';
     if (isOpen) html += renderItems(col.items, 1, col.id);
   });
@@ -288,20 +294,20 @@ function renderCollections() {
 function renderItems(items, depth, cid) {
   var html = '';
   items.forEach(function (it) {
-    var pad = 'padding-left:' + (8 + depth * 14) + 'px';
+    var pad = 'padding-left:' + (12 + depth * 14) + 'px';
     if (it.type === 'folder') {
       var isOpen = !!expanded[it.id];
-      html += '<div class="node" data-kind="folder" data-id="' + esc(it.id) + '" data-cid="' + esc(cid) + '" data-name="' + esc(it.name) + '" style="' + pad + '">' +
+      html += '<div class="trow" data-kind="folder" data-id="' + esc(it.id) + '" data-cid="' + esc(cid) + '" data-name="' + esc(it.name) + '" style="' + pad + '">' +
         '<span class="chev" data-act="chev">' + (isOpen ? ICONS.chevdown : ICONS.chevright) + '</span>' +
         '<span class="nicon">' + ICONS.folder + '</span>' +
-        '<span class="nmain"><span class="nline1"><span class="nname">' + esc(it.name) + '</span></span></span>' +
+        '<span class="tname" style="flex:1">' + esc(it.name) + '</span>' +
       '</div>';
       if (isOpen) html += renderItems(it.items, depth + 1, cid);
     } else {
-      html += '<div class="node" data-kind="request" data-id="' + esc(it.id) + '" data-cid="' + esc(cid) + '" data-name="' + esc(it.name) + '" data-method="' + esc(it.method) + '" style="' + pad + '">' +
+      html += '<div class="trow" data-kind="request" data-id="' + esc(it.id) + '" data-cid="' + esc(cid) + '" data-name="' + esc(it.name) + '" data-method="' + esc(it.method) + '" style="' + pad + '">' +
         '<span class="chev hidden"></span>' +
-        '<span class="nmain"><span class="nline1">' + pill(it.method) + '<span class="nname">' + esc(it.name) + '</span></span>' +
-        (it.lastRun ? '<div class="nsub">' + esc(timeAgo(it.lastRun)) + '</div>' : '') + '</span>' +
+        pill(it.method) +
+        '<span class="tname" style="flex:1">' + esc(it.name) + '</span>' +
       '</div>';
     }
   });
@@ -317,31 +323,12 @@ function renderActivity() {
     });
   }
   if (entries.length === 0) return '<div class="kp-hint">' + (filter ? 'No matches for "' + esc(filter) + '"' : 'No activity yet. Send a request to see it here.') + '</div>';
-  var now = new Date();
-  var startToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
-  var groups = [
-    { label: 'Today', entries: [] },
-    { label: 'Yesterday', entries: [] },
-    { label: 'Previous 7 Days', entries: [] },
-    { label: 'Older', entries: [] }
-  ];
-  entries.forEach(function (e) {
-    if (e.createdAt >= startToday) groups[0].entries.push(e);
-    else if (e.createdAt >= startToday - 86400000) groups[1].entries.push(e);
-    else if (e.createdAt >= startToday - 6 * 86400000) groups[2].entries.push(e);
-    else groups[3].entries.push(e);
-  });
   var html = '';
-  groups.forEach(function (g) {
-    if (g.entries.length === 0) return;
-    html += '<div class="group">' + g.label + ' <span class="gcount">' + g.entries.length + '</span></div>';
-    g.entries.forEach(function (e) {
-      html += '<div class="node" data-kind="activity" data-id="' + esc(e.id) + '" data-name="' + esc(e.name) + '">' +
-        '<span class="chev hidden"></span>' +
-        '<span class="nmain"><span class="nline1">' + pill(e.method) + '<span class="nname">' + esc(e.name) + '</span></span>' +
-        '<div class="nsub">' + esc(timeAgo(e.createdAt)) + '</div></span>' +
-      '</div>';
-    });
+  entries.forEach(function (e) {
+    html += '<div class="node" data-kind="activity" data-id="' + esc(e.id) + '" data-name="' + esc(e.name) + '">' +
+      '<div class="aline">' + pill(e.method) + '<span class="aurl">' + esc(e.url || e.name) + '</span></div>' +
+      '<div class="atime">' + esc(timeAgo(e.createdAt)) + '</div>' +
+    '</div>';
   });
   return html;
 }
@@ -355,11 +342,12 @@ function renderEnvs() {
   envs.forEach(function (e) {
     var isActive = e.id === DATA.activeEnvId;
     html += '<div class="node" data-kind="env" data-id="' + esc(e.id) + '" data-name="' + esc(e.name) + '">' +
-      '<span class="chev hidden"></span>' +
-      '<span class="nicon" style="color:' + ACCENT + '">' + ICONS.env + '</span>' +
-      '<span class="nmain"><span class="nline1"><span class="nname">' + esc(e.name) + '</span>' +
-      (e.type === 'e' ? '<span class="ncount">' + e.varCount + ' vars</span>' : '') +
-      (isActive ? '<span class="envbadge">ACTIVE</span>' : '') + '</span></span>' +
+      '<div class="aline">' +
+        '<span class="nicon" style="color:' + ACCENT + '">' + ICONS.env + '</span>' +
+        '<span class="aurl">' + esc(e.name) + '</span>' +
+        (e.type === 'e' ? '<span class="tsub">' + e.varCount + ' vars</span>' : '') +
+        (isActive ? '<span class="envbadge">ACTIVE</span>' : '') +
+      '</div>' +
     '</div>';
   });
   return html;
@@ -377,25 +365,33 @@ function renderContent() {
   bindContent();
 }
 
+function iconBtnHtml(icon, title, act, val) {
+  return '<button class="iconbtn" data-act="' + act + '" data-val="' + esc(val || '') + '" title="' + title + '">' + ICONS[icon] + '</button>';
+}
+
 function renderChrome() {
-  var actions =
-    '<button class="iconbtn" data-act="cmd" data-cmd="kangpos.new-request" title="New Request">' + ICONS.plus + '</button>' +
-    '<button class="iconbtn" data-act="cmd" data-cmd="kangpos.new-collection" title="New Collection">' + ICONS.folderplus + '</button>' +
-    '<button class="iconbtn" data-act="cmd" data-cmd="kangpos.import" title="Import">' + ICONS.import + '</button>' +
-    '<button class="iconbtn" data-act="cmd" data-cmd="kangpos.manage-envs" title="Manage Environments">' + ICONS.env + '</button>' +
-    '<span class="kp-spacer"></span>' +
-    (tab === 'activity' ? '<button class="iconbtn danger" data-act="cmd" data-cmd="kangpos.clear-activity" title="Clear Activity">' + ICONS.trash + '</button>' : '');
+  var actions = '';
+  if (tab === 'collections') {
+    actions = iconBtnHtml('folderplus', 'New Collection', 'cmd', 'kangpos.new-collection') +
+      iconBtnHtml('import', 'Import', 'cmd', 'kangpos.import');
+  } else if (tab === 'env') {
+    actions = iconBtnHtml('plus', 'New Environment', 'newenv', '');
+  }
   var tabs =
     '<div class="kp-tab' + (tab === 'activity' ? ' active' : '') + '" data-tab="activity">Activity</div>' +
     '<div class="kp-tab' + (tab === 'collections' ? ' active' : '') + '" data-tab="collections">Collections</div>' +
     '<div class="kp-tab' + (tab === 'env' ? ' active' : '') + '" data-tab="env">Env</div>';
-  var placeholder = tab === 'collections' ? 'filter collections' : tab === 'activity' ? 'filter activity' : 'filter environments';
+  var placeholder = tab === 'collections' ? 'filter collections' : tab === 'activity' ? 'filter activity' : 'filter envs';
   $('#app').innerHTML =
-    '<div class="actionbar">' + actions + '</div>' +
+    '<div class="kp-head">' +
+      '<span class="kp-logo">' + ICONS.bolt + '</span>' +
+      '<span class="kp-title">Kangpos</span>' +
+      '<span class="kp-spacer"></span>' + actions +
+    '</div>' +
+    '<button class="kp-newreq" data-act="cmd" data-val="kangpos.new-request">New Request</button>' +
     '<div class="kp-tabs">' + tabs + '</div>' +
     '<div class="filterrow">' +
       '<input id="filterInput" placeholder="' + placeholder + '" value="' + esc(filter) + '">' +
-      '<button class="iconbtn" data-act="clearfilter" title="Clear filter">' + ICONS.filter + '</button>' +
     '</div>' +
     '<div class="content" id="content"></div>';
   $all('.kp-tab').forEach(function (el) {
@@ -411,21 +407,17 @@ function renderChrome() {
     filter = e.target.value;
     renderContent();
   });
-  var cf = $('[data-act="clearfilter"]');
-  if (cf) cf.addEventListener('click', function () {
-    filter = '';
-    $('#filterInput').value = '';
-    renderContent();
-    $('#filterInput').focus();
-  });
   $all('[data-act="cmd"]').forEach(function (el) {
-    el.addEventListener('click', function () { exec(el.getAttribute('data-cmd'), undefined); });
+    el.addEventListener('click', function () { exec(el.getAttribute('data-val'), undefined); });
+  });
+  $all('[data-act="newenv"]').forEach(function (el) {
+    el.addEventListener('click', function () { vscode.postMessage({ command: 'new-env' }); });
   });
   renderContent();
 }
 
 function bindContent() {
-  $all('#content .node').forEach(function (row) {
+  $all('#content .trow').forEach(function (row) {
     var kind = row.getAttribute('data-kind');
     var id = row.getAttribute('data-id');
     var chev = row.querySelector('[data-act="chev"]');
@@ -443,11 +435,23 @@ function bindContent() {
       row.addEventListener('click', function () {
         exec('kangpos.open-request', { collectionId: row.getAttribute('data-cid') || findCollectionId(id), requestId: id });
       });
-    } else if (kind === 'activity') {
-      row.addEventListener('click', function () { exec('kangpos.open-activity', id); });
     } else if (kind === 'env') {
       row.addEventListener('click', function () { exec('kangpos.manage-envs', undefined); });
     }
+    row.addEventListener('contextmenu', function (e) {
+      e.preventDefault();
+      showMenu(e, row);
+    });
+  });
+  $all('#content .node[data-kind="activity"]').forEach(function (row) {
+    row.addEventListener('click', function () { exec('kangpos.open-activity', row.getAttribute('data-id')); });
+    row.addEventListener('contextmenu', function (e) {
+      e.preventDefault();
+      showMenu(e, row);
+    });
+  });
+  $all('#content .node[data-kind="env"]').forEach(function (row) {
+    row.addEventListener('click', function () { exec('kangpos.manage-envs', undefined); });
     row.addEventListener('contextmenu', function (e) {
       e.preventDefault();
       showMenu(e, row);

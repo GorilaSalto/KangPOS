@@ -142,6 +142,17 @@ export function newAuth(): AuthConfig {
   };
 }
 
+export function defaultHeaders(method: string): { name: string; value: string; disabled?: boolean }[] {
+  const headers = [
+    { name: 'Accept', value: '*/*', disabled: false },
+    { name: 'User-Agent', value: 'KangPOS(@kangpos)', disabled: false }
+  ];
+  if ((method || '').toUpperCase() === 'POST') {
+    headers.push({ name: 'Content-Type', value: 'application/json', disabled: false });
+  }
+  return headers;
+}
+
 export function newRequest(name: string): KangposRequest {
   return {
     _id: uid(),
@@ -149,7 +160,7 @@ export function newRequest(name: string): KangposRequest {
     method: 'GET',
     url: '',
     body: newBody(),
-    headers: [],
+    headers: defaultHeaders('GET'),
     auth: newAuth(),
     tests: [],
     script: '',

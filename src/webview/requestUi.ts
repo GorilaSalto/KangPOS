@@ -43,7 +43,7 @@ export function getRequestHtml(init: RequestUiInit): string {
 * { box-sizing: border-box; }
 body {
   margin: 0;
-  padding: 10px 12px 40px;
+  padding: 10px 14px 40px;
   color: var(--vscode-editor-foreground, #cccccc);
   background: var(--vscode-editor-background, #1e1e1e);
   font-family: var(--vscode-font-family, sans-serif);
@@ -64,8 +64,9 @@ button {
   background: var(--vscode-button-secondaryBackground, #3a3d41);
   color: var(--vscode-button-secondaryForeground, #ffffff);
   border: none;
-  border-radius: 2px;
-  padding: 4px 12px;
+  border-radius: 3px;
+  height: 24px;
+  padding: 0 10px;
   cursor: pointer;
   font-size: 12px;
 }
@@ -73,55 +74,73 @@ button:hover { background: var(--vscode-button-secondaryHoverBackground, #45494e
 button.primary { background: var(--accent); color: #fff; }
 button.primary:hover { filter: brightness(1.1); background: var(--accent); }
 button:disabled { opacity: 0.6; cursor: default; }
-.kp-top { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
-.kp-top #reqName { flex: 1; font-size: 13px; font-weight: 600; }
-.kp-actions { display: flex; gap: 6px; }
-.kp-reqbar { display: flex; gap: 8px; margin-bottom: 8px; }
-.kp-reqbar #urlInput { flex: 1; }
+.kp-reqbar { display: flex; gap: 6px; margin-bottom: 10px; }
+.kp-reqbar #urlInput { flex: 1; height: 28px; }
 #methodSelect {
-  width: 110px; font-weight: 700; color: #fff; border: none; cursor: pointer;
-  -webkit-appearance: none; appearance: none; text-align: center; padding: 5px 6px;
+  width: 108px; height: 28px; font-weight: 700; font-size: 12px; color: #fff; letter-spacing: 0.4px;
+  border: none; border-radius: 3px; cursor: pointer;
+  -webkit-appearance: none; appearance: none;
+  padding: 0 24px 0 14px;
+  background-color: #2980b9;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath fill='%23ffffff' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 10px 6px;
 }
-#sendBtn { min-width: 80px; font-weight: 600; padding: 5px 18px; }
-.kp-tabs { display: flex; gap: 2px; border-bottom: 1px solid var(--vscode-panel-border, #333); margin-bottom: 10px; }
-.kp-tab { padding: 6px 12px; cursor: pointer; font-size: 12px; color: var(--vscode-foreground, #ccc); border-bottom: 2px solid transparent; user-select: none; }
+#sendBtn { height: 28px; min-width: 86px; font-weight: 600; font-size: 13px; padding: 0 20px; }
+.kp-toolbar { display: flex; gap: 6px; align-items: center; margin-bottom: 10px; }
+.kp-toolbar select { height: 24px; }
+#actionSelect { max-width: 140px; }
+.iconbtn { width: 24px; height: 24px; padding: 0; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: none; border-radius: 4px; cursor: pointer; color: var(--vscode-editor-foreground, #ccc); opacity: 0.8; }
+.iconbtn:hover { background: rgba(128,128,128,0.22); opacity: 1; }
+.iconbtn svg { width: 15px; height: 15px; }
+.kp-spacer { flex: 1; }
+.kp-tabs { display: flex; gap: 18px; border-bottom: 1px solid rgba(128,128,128,0.25); margin-bottom: 12px; }
+.kp-tab { padding: 7px 1px; cursor: pointer; font-size: 12.5px; color: var(--vscode-descriptionForeground, #999); border-bottom: 2px solid transparent; user-select: none; }
 .kp-tab:hover { color: var(--vscode-editor-foreground); }
 .kp-tab.active { border-bottom-color: var(--accent); color: var(--vscode-editor-foreground); }
-.kp-count { opacity: 0.7; font-size: 10px; margin-left: 4px; }
+.kp-count { font-size: 10px; color: var(--vscode-descriptionForeground, #999); margin-left: 3px; vertical-align: super; }
 .kp-tabpanel { margin-bottom: 12px; }
-.row { display: flex; gap: 6px; margin-bottom: 6px; align-items: center; }
-.row input.row-name { flex: 3; }
-.row input.row-value { flex: 7; }
-.row-del { background: transparent; color: var(--vscode-editor-foreground, #ccc); font-size: 14px; padding: 2px 8px; }
+.kp-sectitle { font-size: 13px; margin: 2px 0 6px; color: var(--vscode-editor-foreground, #ddd); }
+.ptable { max-width: 780px; }
+.prow { display: flex; align-items: center; gap: 8px; border-bottom: 1px solid rgba(128,128,128,0.16); padding: 2px 0; }
+.prow input.row-name { flex: 2; background: transparent; border: none; padding: 4px 6px; height: 24px; }
+.prow input.row-value { flex: 3; background: transparent; border: none; padding: 4px 6px; height: 24px; color: var(--vscode-descriptionForeground, #b4b4b4); }
+.prow input:focus { border: none; }
+.row-check { width: 15px; height: 15px; accent-color: var(--accent); cursor: pointer; flex: none; }
+.row-check.ghost { visibility: hidden; }
+.prow.off input.row-name, .prow.off input.row-value { opacity: 0.45; }
+.row-del { background: transparent; color: var(--vscode-descriptionForeground, #999); font-size: 14px; padding: 0 6px; width: 22px; height: 22px; opacity: 0; flex: none; }
+.prow:hover .row-del { opacity: 1; }
 .row-del:hover { color: #e74c3c; background: transparent; }
-.row-check { width: 14px; height: 14px; flex: none; }
+.row { display: flex; gap: 6px; margin-bottom: 6px; align-items: center; }
+.row input.row-name, .row input.row-value { background: var(--vscode-input-background, #3c3c3c); border: 1px solid var(--vscode-input-border, #3c3c3c); }
 .kp-hint { color: var(--vscode-descriptionForeground, #888); font-size: 12px; margin: 6px 0; }
 .kp-btnrow { margin-top: 8px; display: flex; gap: 8px; }
 .kp-label { font-size: 11px; color: var(--vscode-descriptionForeground, #999); margin: 8px 0 4px; text-transform: uppercase; letter-spacing: 0.4px; }
 .kp-grid { display: grid; grid-template-columns: 130px 1fr; gap: 6px; align-items: center; max-width: 720px; }
 .kp-error { background: #5f2120; border: 1px solid #e74c3c; color: #f5c6cb; padding: 10px 14px; border-radius: 3px; margin: 10px 0; white-space: pre-wrap; font-size: 12px; }
-.kp-resp { border-top: 1px solid var(--vscode-panel-border, #333); padding-top: 10px; }
-.kp-resp-meta { display: flex; gap: 12px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
-.kp-pill { padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: 700; color: #fff; }
-.kp-pill.ok { background: #2e7d32; }
-.kp-pill.warn { background: #ef6c00; }
-.kp-pill.err { background: #c62828; }
-.kp-meta { color: var(--vscode-descriptionForeground, #999); font-size: 12px; }
-.kp-spacer { flex: 1; }
-.kp-resp-tabs { display: flex; gap: 2px; border-bottom: 1px solid var(--vscode-panel-border, #333); margin-bottom: 8px; }
-.kp-rtab { padding: 5px 12px; cursor: pointer; font-size: 12px; border-bottom: 2px solid transparent; user-select: none; }
-.kp-rtab.active { border-bottom-color: var(--accent); }
-.resp-toolbar { margin-bottom: 6px; }
-.resp-toolbar input { width: 60%; }
-pre.resp-body {
-  background: var(--vscode-code-block-background, rgba(128,128,128,0.1));
-  padding: 10px 14px; border-radius: 3px; overflow: auto; max-height: 55vh;
-  font-family: var(--vscode-editor-font-family, monospace); font-size: 12px;
-  white-space: pre-wrap; word-break: break-word; margin: 0; line-height: 1.55;
-}
-.tok-key { color: #9cdcfe; }
-.tok-str { color: #ce9178; }
-.tok-num { color: #b5cea8; }
+.kp-resp { border-top: 1px solid rgba(128,128,128,0.25); margin-top: 14px; padding-top: 8px; }
+.kp-resp-meta { display: flex; gap: 4px 16px; align-items: baseline; margin-bottom: 6px; font-size: 12px; flex-wrap: wrap; }
+.rlabel { color: var(--vscode-descriptionForeground, #999); }
+.rval-ok { color: #27ae60; font-weight: 600; }
+.rval-warn { color: #f39c12; font-weight: 600; }
+.rval-err { color: #e74c3c; font-weight: 600; }
+.rval-size { color: var(--accent, #29b6f6); }
+.rval-time { color: #f39c12; }
+.kp-resp-tabs { display: flex; gap: 16px; border-bottom: 1px solid rgba(128,128,128,0.25); margin-bottom: 4px; }
+.kp-rtab { padding: 6px 1px; cursor: pointer; font-size: 12.5px; color: var(--vscode-descriptionForeground, #999); border-bottom: 2px solid transparent; user-select: none; }
+.kp-rtab:hover { color: var(--vscode-editor-foreground); }
+.kp-rtab.active { color: var(--vscode-editor-foreground); border-bottom-color: var(--accent); }
+.resp-code { padding: 10px 0 4px; font-family: var(--vscode-editor-font-family, monospace); font-size: 12px; line-height: 1.55; overflow: auto; max-height: 48vh; }
+.cl { display: flex; }
+.cl .ln { flex: none; width: 42px; padding-right: 16px; text-align: right; color: #636d83; user-select: none; }
+.cl .lc { flex: 1; min-width: 0; white-space: pre-wrap; word-break: break-word; }
+.resp-filterrow { display: flex; justify-content: flex-end; padding-top: 6px; }
+.resp-filterrow input { width: 220px; border-radius: 12px; padding: 3px 12px; font-size: 12px; height: 22px; }
+.tok-key { color: #e06c75; }
+.tok-str { color: #d19a66; }
+.tok-num { color: #c8ccd4; }
 .tok-bool { color: #569cd6; }
 .tok-null { color: #569cd6; }
 .tok-tag { color: #569cd6; }
@@ -129,13 +148,13 @@ pre.resp-body {
 .tok-comment { color: #6a9955; }
 .tok-plain { color: var(--vscode-editor-foreground, #ccc); }
 .muted { color: var(--vscode-descriptionForeground, #888); }
-.resp-headers { width: 100%; border-collapse: collapse; font-size: 12px; }
+.resp-headers { width: 100%; border-collapse: collapse; font-size: 12px; max-width: 900px; }
 .resp-headers td { padding: 3px 10px; border-bottom: 1px solid rgba(128,128,128,0.15); vertical-align: top; }
 .resp-headers td:first-child { color: var(--vscode-descriptionForeground, #999); white-space: nowrap; width: 220px; }
 .test-line { display: flex; gap: 8px; align-items: baseline; padding: 4px 2px; font-size: 12px; border-bottom: 1px solid rgba(128,128,128,0.12); }
 .test-icon { font-weight: 700; }
-.test-pass { color: #66bb6a; }
-.test-fail { color: #ef5350; }
+.test-pass { color: #27ae60; }
+.test-fail { color: #e74c3c; }
 .test-name { font-weight: 600; }
 .test-msg { color: var(--vscode-descriptionForeground, #999); }
 .resp-img { max-width: 100%; max-height: 50vh; border-radius: 3px; }
@@ -161,6 +180,7 @@ var errorText = '';
 var paramRows = [];
 var METHOD_COLORS = { GET: '#27ae60', POST: '#f39c12', PUT: '#2980b9', PATCH: '#8e44ad', DELETE: '#e74c3c', HEAD: '#7f8c8d', OPTIONS: '#16a085' };
 var METHODS = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'];
+var SAVE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>';
 
 function $(sel) { return document.querySelector(sel); }
 function $all(sel) { return Array.prototype.slice.call(document.querySelectorAll(sel)); }
@@ -169,6 +189,7 @@ function esc(s) {
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 function safeDecode(s) { try { return decodeURIComponent(String(s).replace(/\\+/g, ' ')); } catch (e) { return s; } }
+function escPlain(l) { return esc(l); }
 
 function ensureModel() {
   if (!model.body) model.body = { type: 'none', raw: '', form: [], formdata: [], graphql: { query: '', variables: '' }, binaryName: '', binaryData: '', binaryPath: '' };
@@ -202,7 +223,7 @@ function parseUrlQuery(url) {
     var eq = pair.indexOf('=');
     var name = eq > -1 ? pair.slice(0, eq) : pair;
     var value = eq > -1 ? pair.slice(eq + 1) : '';
-    out.push({ name: safeDecode(name), value: safeDecode(value) });
+    out.push({ name: safeDecode(name), value: safeDecode(value), disabled: false });
   });
   return out;
 }
@@ -215,6 +236,7 @@ function serializeUrl(base, rows) {
   if (qIdx > -1) basePart = basePart.slice(0, qIdx);
   var pairs = [];
   rows.forEach(function (p) {
+    if (p.disabled) return;
     if (p.name === '' && p.value === '') return;
     pairs.push(encodeURIComponent(p.name) + '=' + encodeURIComponent(p.value));
   });
@@ -227,24 +249,21 @@ function activeHeaders() {
 
 function buildSkeleton() {
   $('#app').innerHTML =
-    '<div class="kp-top">' +
-      '<select id="envSelect" title="Environment"></select>' +
-      '<input id="reqName" placeholder="Request Name">' +
-      '<div class="kp-actions">' +
-        '<button id="saveBtn" class="primary">Save</button>' +
-        '<button id="saveAsBtn">Save As</button>' +
-        '<select id="actionSelect" title="Actions">' +
-          '<option value="">Actions</option>' +
-          '<option value="curl">Copy as cURL</option>' +
-          '<option value="codegen">Generate Code</option>' +
-          '<option value="save-resp">Save Response</option>' +
-        '</select>' +
-      '</div>' +
-    '</div>' +
     '<div class="kp-reqbar">' +
       '<select id="methodSelect"></select>' +
       '<input id="urlInput" placeholder="Enter request URL e.g. https://api.example.com/v1/users">' +
       '<button id="sendBtn" class="primary">Send</button>' +
+    '</div>' +
+    '<div class="kp-toolbar">' +
+      '<select id="envSelect" title="Environment"></select>' +
+      '<span class="kp-spacer"></span>' +
+      '<button id="saveIconBtn" class="iconbtn" title="Save (Ctrl+S)">' + SAVE_ICON + '</button>' +
+      '<select id="actionSelect" title="Actions">' +
+        '<option value="">Actions</option>' +
+        '<option value="curl">Copy as cURL</option>' +
+        '<option value="codegen">Generate Code</option>' +
+        '<option value="save-resp">Save Response</option>' +
+      '</select>' +
     '</div>' +
     '<div class="kp-tabs" id="tabBar"></div>' +
     '<div class="kp-tabpanel" id="tabPanel"></div>' +
@@ -253,7 +272,6 @@ function buildSkeleton() {
 }
 
 function bindSkeleton() {
-  $('#reqName').addEventListener('input', function (e) { model.name = e.target.value; });
   $('#urlInput').addEventListener('input', function (e) {
     model.url = e.target.value;
     if (activeTab === 'params') { paramRows = parseUrlQuery(model.url); renderTabPanel(); }
@@ -261,16 +279,15 @@ function bindSkeleton() {
   });
   $('#methodSelect').addEventListener('change', function (e) {
     model.method = e.target.value;
-    e.target.style.background = METHOD_COLORS[model.method] || '#7f8c8d';
+    e.target.style.backgroundColor = METHOD_COLORS[model.method] || '#7f8c8d';
+    if (model.method === 'POST' && !(model.headers || []).some(function (h) { return (h.name || '').toLowerCase() === 'content-type'; })) {
+      model.headers.push({ name: 'Content-Type', value: 'application/json', disabled: false });
+      if (activeTab === 'headers') renderTabPanel();
+      updateTabCounts();
+    }
   });
   $('#sendBtn').addEventListener('click', function () { send(); });
-  $('#saveBtn').addEventListener('click', function () {
-    if (meta.saved) vscode.postMessage({ command: 'save', model: model });
-    else vscode.postMessage({ command: 'save-as', model: model });
-  });
-  $('#saveAsBtn').addEventListener('click', function () {
-    vscode.postMessage({ command: 'save-as', model: model });
-  });
+  $('#saveIconBtn').addEventListener('click', function () { save(); });
   $('#actionSelect').addEventListener('change', function (e) {
     var action = e.target.value;
     e.target.value = '';
@@ -294,14 +311,23 @@ function bindSkeleton() {
       e.preventDefault();
       send();
     }
+    if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && (e.key === 's' || e.key === 'S')) {
+      e.preventDefault();
+      save();
+    }
   });
+}
+
+function save() {
+  if (meta.saved) vscode.postMessage({ command: 'save', model: model });
+  else vscode.postMessage({ command: 'save-as', model: model });
 }
 
 function renderMethod() {
   var sel = $('#methodSelect');
   sel.innerHTML = METHODS.map(function (m) { return '<option value="' + m + '">' + m + '</option>'; }).join('');
   sel.value = METHODS.indexOf(model.method) > -1 ? model.method : 'GET';
-  sel.style.background = METHOD_COLORS[sel.value] || '#7f8c8d';
+  sel.style.backgroundColor = METHOD_COLORS[sel.value] || '#7f8c8d';
 }
 
 function renderEnvSelect() {
@@ -317,20 +343,14 @@ function renderEnvSelect() {
   if (sel.value !== meta.activeEnvId) sel.value = 'g';
 }
 
-function renderTop() {
-  $('#reqName').value = model.name || '';
-  $('#saveBtn').textContent = meta.saved ? 'Save' : 'Save As';
-  $('#saveAsBtn').style.display = meta.saved ? '' : 'none';
-}
-
 function tabDefs() {
   return [
-    ['params', 'Params', paramRows.length],
-    ['body', 'Body', model.body && model.body.type !== 'none' ? 1 : 0],
-    ['auth', 'Auth', model.auth && model.auth.type !== 'none' ? 1 : 0],
+    ['params', 'Params', 0],
+    ['auth', 'Auth', 0],
     ['headers', 'Headers', activeHeaders().length],
+    ['body', 'Body', 0],
     ['tests', 'Tests', (model.tests || []).filter(function (t) { return !t.disabled; }).length],
-    ['docs', 'Docs', model.docs ? 1 : 0]
+    ['docs', 'Docs', 0]
   ];
 }
 
@@ -351,55 +371,82 @@ function updateTabCounts() {
   });
 }
 
-function rowHtml(prefix, i, nameValue, valueHtml, checked, mono) {
-  return '<div class="row" data-i="' + i + '">' +
+function rowHtml(prefix, i, nameValue, valueHtml, checked, phName) {
+  return '<div class="prow' + (checked === false ? ' off' : '') + '" data-i="' + i + '">' +
     (checked === null ? '' : '<input type="checkbox" class="row-check" data-act="check"' + (checked ? ' checked' : '') + '>') +
-    '<input class="row-name" data-act="name" value="' + esc(nameValue) + '" placeholder="Name"' + (mono ? ' style="font-family:var(--vscode-editor-font-family,monospace)"' : '') + '>' +
+    '<input class="row-name" data-act="name" value="' + esc(nameValue) + '" placeholder="' + (phName || 'Name') + '">' +
     valueHtml +
     '<button class="row-del" data-act="del" title="Remove">&times;</button>' +
   '</div>';
 }
 
+function tplRowHtml(withCheck, phName, phValue, valueHtml) {
+  return '<div class="prow tpl">' +
+    (withCheck ? '<input type="checkbox" class="row-check ghost" tabindex="-1">' : '') +
+    '<input class="row-name" data-tpl="name" placeholder="' + phName + '">' +
+    valueHtml +
+    '<span class="row-del"></span>' +
+  '</div>';
+}
+
+function focusTpl(field) {
+  var tpl = $('#tabPanel .prow.tpl');
+  if (tpl) {
+    var el = tpl.querySelector('[data-tpl="' + field + '"]');
+    if (el) el.focus();
+  }
+}
+
 function renderTabPanel() {
   var panel = $('#tabPanel');
   if (activeTab === 'params') {
-    var html = '';
-    if (paramRows.length === 0) {
-      html = '<div class="kp-hint">No query parameters. Add a parameter or type it in the URL e.g. ?page=1&size=10</div>';
-    } else {
-      html = paramRows.map(function (p, i) {
-        return rowHtml('param', i, p.name, '<input class="row-value" data-act="value" value="' + esc(p.value) + '" placeholder="Value" style="flex:7;font-family:var(--vscode-editor-font-family,monospace)">', null);
-      }).join('');
-    }
-    html += '<div class="kp-btnrow"><button id="addParam">+ Add Param</button></div>';
+    var html = '<div class="kp-sectitle">Query Parameters</div><div class="ptable">';
+    html += paramRows.map(function (p, i) {
+      return rowHtml('param', i, p.name, '<input class="row-value" data-act="value" value="' + esc(p.value) + '" placeholder="Value">', !p.disabled, 'name');
+    }).join('');
+    html += tplRowHtml(true, 'parameter', 'value', '<input class="row-value" data-tpl="value" placeholder="value">');
+    html += '</div>';
     panel.innerHTML = html;
-    $all('#tabPanel .row').forEach(function (row) {
+    $all('#tabPanel .prow[data-i]').forEach(function (row) {
       var i = parseInt(row.getAttribute('data-i'), 10);
+      row.querySelector('[data-act="check"]').addEventListener('change', function (e) {
+        paramRows[i].disabled = !e.target.checked;
+        row.classList.toggle('off', !e.target.checked);
+        model.url = serializeUrl(model.url, paramRows);
+        $('#urlInput').value = model.url;
+      });
       row.querySelectorAll('[data-act="name"], [data-act="value"]').forEach(function (inp) {
         inp.addEventListener('input', function () {
           paramRows[i].name = row.querySelector('[data-act="name"]').value;
           paramRows[i].value = row.querySelector('[data-act="value"]').value;
           model.url = serializeUrl(model.url, paramRows);
           $('#urlInput').value = model.url;
-          updateTabCounts();
         });
       });
       row.querySelector('[data-act="del"]').addEventListener('click', function () {
         paramRows.splice(i, 1);
         model.url = serializeUrl(model.url, paramRows);
         $('#urlInput').value = model.url;
-        updateTabCounts();
         renderTabPanel();
       });
     });
-    var addBtn = $('#addParam');
-    if (addBtn) addBtn.addEventListener('click', function () {
-      paramRows.push({ name: '', value: '' });
-      renderTabPanel();
-      var rows = $all('#tabPanel .row');
-      var last = rows[rows.length - 1];
-      if (last) last.querySelector('[data-act="name"]').focus();
-    });
+    var tpl = $('#tabPanel .prow.tpl');
+    if (tpl) {
+      var tplName = tpl.querySelector('[data-tpl="name"]');
+      var tplValue = tpl.querySelector('[data-tpl="value"]');
+      tplName.addEventListener('input', function (e) {
+        if (e.target.value === '') return;
+        paramRows.push({ name: e.target.value, value: '', disabled: false });
+        renderTabPanel();
+        focusTpl('name');
+      });
+      tplValue.addEventListener('input', function (e) {
+        if (e.target.value === '') return;
+        paramRows.push({ name: '', value: e.target.value, disabled: false });
+        renderTabPanel();
+        focusTpl('value');
+      });
+    }
     return;
   }
 
@@ -437,19 +484,18 @@ function renderTabPanel() {
   }
 
   if (activeTab === 'headers') {
-    var html = '';
-    if (model.headers.length === 0) {
-      html = '<div class="kp-hint">No headers set.</div>';
-    }
+    var html = '<div class="kp-sectitle">Headers</div><div class="ptable">';
     model.headers.forEach(function (h, i) {
-      html += rowHtml('header', i, h.name, '<input class="row-value" data-act="value" value="' + esc(h.value) + '" placeholder="Value" style="flex:7;font-family:var(--vscode-editor-font-family,monospace)">', !h.disabled);
+      html += rowHtml('header', i, h.name, '<input class="row-value" data-act="value" value="' + esc(h.value) + '" placeholder="Value">', !h.disabled, 'name');
     });
-    html += '<div class="kp-btnrow"><button id="addHeader">+ Add Header</button></div>';
+    html += tplRowHtml(true, 'header', 'value', '<input class="row-value" data-tpl="value" placeholder="value">');
+    html += '</div>';
     panel.innerHTML = html;
-    $all('#tabPanel .row').forEach(function (row) {
+    $all('#tabPanel .prow[data-i]').forEach(function (row) {
       var i = parseInt(row.getAttribute('data-i'), 10);
       row.querySelector('[data-act="check"]').addEventListener('change', function (e) {
         model.headers[i].disabled = !e.target.checked;
+        row.classList.toggle('off', !e.target.checked);
         updateTabCounts();
       });
       row.querySelector('[data-act="name"]').addEventListener('input', function (e) {
@@ -465,14 +511,23 @@ function renderTabPanel() {
         renderTabPanel();
       });
     });
-    var addBtn = $('#addHeader');
-    if (addBtn) addBtn.addEventListener('click', function () {
-      model.headers.push({ name: '', value: '', disabled: false });
-      renderTabPanel();
-      var rows = $all('#tabPanel .row');
-      var last = rows[rows.length - 1];
-      if (last) last.querySelector('[data-act="name"]').focus();
-    });
+    var tpl = $('#tabPanel .prow.tpl');
+    if (tpl) {
+      var tplName = tpl.querySelector('[data-tpl="name"]');
+      var tplValue = tpl.querySelector('[data-tpl="value"]');
+      tplName.addEventListener('input', function (e) {
+        if (e.target.value === '') return;
+        model.headers.push({ name: e.target.value, value: '', disabled: false });
+        renderTabPanel();
+        focusTpl('name');
+      });
+      tplValue.addEventListener('input', function (e) {
+        if (e.target.value === '') return;
+        model.headers.push({ name: '', value: e.target.value, disabled: false });
+        renderTabPanel();
+        focusTpl('value');
+      });
+    }
     return;
   }
 
@@ -609,29 +664,31 @@ function renderBodyEditor(container) {
     html = '<div class="kp-label">Query</div><textarea id="gqlQuery" rows="8" spellcheck="false"></textarea>' +
       '<div class="kp-label">Variables (JSON)</div><textarea id="gqlVars" rows="4" spellcheck="false"></textarea>';
   } else if (body.type === 'form') {
-    if (body.form.length === 0) html = '<div class="kp-hint">No form fields.</div>';
+    html = '<div class="kp-sectitle">Form Urlencoded</div><div class="ptable">';
     body.form.forEach(function (f, i) {
-      html += rowHtml('form', i, f.name, '<input class="row-value" data-act="value" value="' + esc(f.value) + '" placeholder="Value" style="flex:7;font-family:var(--vscode-editor-font-family,monospace)">', null);
+      html += rowHtml('form', i, f.name, '<input class="row-value" data-act="value" value="' + esc(f.value) + '" placeholder="Value">', null, 'name');
     });
-    html += '<div class="kp-btnrow"><button id="addFormField">+ Add Field</button></div>';
+    html += tplRowHtml(false, 'name', 'value', '<input class="row-value" data-tpl="value" placeholder="value">');
+    html += '</div>';
   } else if (body.type === 'formdata') {
-    if (body.formdata.length === 0) html = '<div class="kp-hint">No form data fields.</div>';
+    html = '<div class="kp-sectitle">Form Data (multipart)</div><div class="ptable">';
     body.formdata.forEach(function (f, i) {
       var valueHtml;
       if (f.type === 'file') {
-        valueHtml = '<button class="row-value kp-select-sm" data-act="pickfile" style="flex:7;text-align:left">' + esc(f.fileName || 'Select File') + '</button>' +
+        valueHtml = '<button class="row-value" data-act="pickfile" style="flex:3;text-align:left;height:24px">' + esc(f.fileName || 'Select File') + '</button>' +
           '<input type="file" style="display:none" data-act="fileinput">';
       } else {
-        valueHtml = '<input class="row-value" data-act="value" value="' + esc(f.value) + '" placeholder="Value" style="flex:7;font-family:var(--vscode-editor-font-family,monospace)">';
+        valueHtml = '<input class="row-value" data-act="value" value="' + esc(f.value) + '" placeholder="Value">';
       }
-      html += '<div class="row" data-i="' + i + '">' +
-        '<input class="row-name" data-act="name" value="' + esc(f.name) + '" placeholder="Name">' +
-        '<select class="kp-select-sm" data-act="fdtype" style="flex:1"><option value="text"' + (f.type !== 'file' ? ' selected' : '') + '>Text</option><option value="file"' + (f.type === 'file' ? ' selected' : '') + '>File</option></select>' +
+      html += '<div class="prow" data-i="' + i + '">' +
+        '<input class="row-name" data-act="name" value="' + esc(f.name) + '" placeholder="name">' +
+        '<select class="kp-select-sm" data-act="fdtype" style="flex:none"><option value="text"' + (f.type !== 'file' ? ' selected' : '') + '>Text</option><option value="file"' + (f.type === 'file' ? ' selected' : '') + '>File</option></select>' +
         valueHtml +
-        '<button class="row-del" data-act="del">&times;</button>' +
+        '<button class="row-del" data-act="del" title="Remove">&times;</button>' +
       '</div>';
     });
-    html += '<div class="kp-btnrow"><button id="addFdField">+ Add Field</button></div>';
+    html += tplRowHtml(false, 'name', 'value', '<input class="row-value" data-tpl="value" placeholder="value">');
+    html += '</div>';
   } else if (body.type === 'binary') {
     html = '<div class="row"><button id="binPick" style="flex:none">' + esc(body.binaryName || 'Select File') + '</button>' +
       '<input type="file" id="binInput" style="display:none"></div>';
@@ -653,10 +710,13 @@ function renderBodyEditor(container) {
     gv.value = body.graphql.variables;
     gv.addEventListener('input', function (e) { body.graphql.variables = e.target.value; });
   }
-  $all('#tabPanel .row').forEach(function (row) {
+  $all('#tabPanel .prow[data-i]').forEach(function (row) {
     var i = parseInt(row.getAttribute('data-i'), 10);
     var nameEl = row.querySelector('[data-act="name"]');
-    if (nameEl) nameEl.addEventListener('input', function (e) { body.form[i].name = e.target.value; });
+    if (nameEl) nameEl.addEventListener('input', function (e) {
+      if (body.type === 'form') body.form[i].name = e.target.value;
+      else body.formdata[i].name = e.target.value;
+    });
     var valueEl = row.querySelector('[data-act="value"]');
     if (valueEl) valueEl.addEventListener('input', function (e) {
       if (body.type === 'form') body.form[i].value = e.target.value;
@@ -692,16 +752,25 @@ function renderBodyEditor(container) {
       renderTabPanel();
     });
   });
-  var addForm = container.querySelector('#addFormField');
-  if (addForm) addForm.addEventListener('click', function () {
-    body.form.push({ name: '', value: '' });
-    renderTabPanel();
-  });
-  var addFd = container.querySelector('#addFdField');
-  if (addFd) addFd.addEventListener('click', function () {
-    body.formdata.push({ name: '', value: '', type: 'text' });
-    renderTabPanel();
-  });
+  var tpl = container.querySelector('.prow.tpl');
+  if (tpl) {
+    var tplName = tpl.querySelector('[data-tpl="name"]');
+    var tplValue = tpl.querySelector('[data-tpl="value"]');
+    if (tplName) tplName.addEventListener('input', function (e) {
+      if (e.target.value === '') return;
+      if (body.type === 'form') body.form.push({ name: e.target.value, value: '' });
+      else body.formdata.push({ name: e.target.value, value: '', type: 'text' });
+      renderTabPanel();
+      focusTpl('name');
+    });
+    if (tplValue) tplValue.addEventListener('input', function (e) {
+      if (e.target.value === '') return;
+      if (body.type === 'form') body.form.push({ name: '', value: e.target.value });
+      else body.formdata.push({ name: '', value: e.target.value, type: 'text' });
+      renderTabPanel();
+      focusTpl('value');
+    });
+  }
   var binPick = container.querySelector('#binPick');
   if (binPick) {
     var binInput = container.querySelector('#binInput');
@@ -883,6 +952,11 @@ function showError(message) {
   }
 }
 
+function rtabHtml(id, label, count) {
+  return '<div class="kp-rtab' + (respTab === id ? ' active' : '') + '" data-rtab="' + id + '">' + label +
+    (count > 0 ? '<span class="kp-count">' + count + '</span>' : '') + '</div>';
+}
+
 function renderResponse() {
   var section = $('#respSection');
   if (!response && !testsResult) {
@@ -892,22 +966,22 @@ function renderResponse() {
   section.style.display = 'block';
   var html = '';
   if (response) {
-    var pill = '<span class="kp-pill ' + statusClass(response.status) + '">' + response.status + (response.statusText ? ' ' + esc(response.statusText) : '') + '</span>';
-    var time = '<span class="kp-meta">' + formatTime(response.timeMs) + '</span>';
-    var size = '<span class="kp-meta">' + formatSize(response.size) + '</span>';
-    html += '<div class="kp-resp-meta">' + pill + time + size + '<div class="kp-spacer"></div>' +
+    var cls = statusClass(response.status);
+    html += '<div class="kp-resp-meta">' +
+      '<span><span class="rlabel">Status:</span> <span class="rval-' + cls + '">' + response.status + (response.statusText ? ' ' + esc(response.statusText) : '') + '</span></span>' +
+      '<span><span class="rlabel">Size:</span> <span class="rval-size">' + formatSize(response.size) + '</span></span>' +
+      '<span><span class="rlabel">Time:</span> <span class="rval-time">' + formatTime(response.timeMs) + '</span></span>' +
+      '<span class="kp-spacer"></span>' +
       '<button id="copyRespBtn">Copy</button>' +
       '<button id="saveRespBtn">Save</button></div>';
   }
-  var testSummary = '';
-  if (testsResult && testsResult.results && testsResult.results.length > 0) {
-    testSummary = ' (' + testsResult.passed + ' passed, ' + testsResult.failed + ' failed)';
-  }
   html += '<div class="kp-resp-tabs">' +
-    '<div class="kp-rtab' + (respTab === 'body' ? ' active' : '') + '" data-rtab="body">Body</div>' +
-    '<div class="kp-rtab' + (respTab === 'headers' ? ' active' : '') + '" data-rtab="headers">Headers</div>' +
-    '<div class="kp-rtab' + (respTab === 'tests' ? ' active' : '') + '" data-rtab="tests">Tests' + testSummary + '</div>' +
-  '</div><div id="respContent"></div>';
+    rtabHtml('body', 'Response', 0) +
+    rtabHtml('headers', 'Headers', response ? response.headers.length : 0) +
+    rtabHtml('cookies', 'Cookies', 0) +
+    rtabHtml('tests', 'Test Results', testsResult && testsResult.results ? testsResult.results.length : 0) +
+  '</div><div id="respContent"></div>' +
+  '<div class="resp-filterrow"><input id="respFilter" placeholder="filter" value="' + esc(filterText) + '"></div>';
   section.innerHTML = html;
   $all('.kp-rtab').forEach(function (el) {
     el.addEventListener('click', function () {
@@ -926,10 +1000,12 @@ function renderResponse() {
   if (saveBtn) saveBtn.addEventListener('click', function () {
     vscode.postMessage({ command: 'save-response', base64: response.base64, name: model.name || 'response' });
   });
-  var content = $('#respContent');
-  if (respTab === 'body') renderRespBody(content);
-  else if (respTab === 'headers') renderRespHeaders(content);
-  else renderRespTests(content);
+  var filterInput = $('#respFilter');
+  filterInput.addEventListener('input', function (e) {
+    filterText = e.target.value;
+    renderRespContent();
+  });
+  renderRespContent();
 }
 
 function formatTime(ms) {
@@ -943,64 +1019,78 @@ function formatSize(bytes) {
   return (bytes / 1048576).toFixed(2) + ' MB';
 }
 
+function numberedHtml(rawText, highlightFn) {
+  var lines = String(rawText).split('\\n');
+  var rows = lines.map(function (l, i) {
+    var content = l === '' ? '&nbsp;' : highlightFn(l);
+    return '<div class="cl"><span class="ln">' + (i + 1) + '</span><span class="lc">' + content + '</span></div>';
+  });
+  return rows.join('');
+}
+
+function renderRespContent() {
+  var content = $('#respContent');
+  if (!content) return;
+  if (respTab === 'body') renderRespBody(content);
+  else if (respTab === 'headers') renderRespHeaders(content);
+  else if (respTab === 'cookies') renderRespCookies(content);
+  else renderRespTests(content);
+}
+
 function renderRespBody(content) {
   var bodyText = response.body || '';
   var contentType = response.contentType || '';
   var filter = filterText.trim();
   var inner = '';
   if (contentType.indexOf('image/') === 0 && response.base64) {
-    inner = '<img class="resp-img" src="data:' + contentType.split(';')[0] + ';base64,' + response.base64 + '">';
-  } else if (filter) {
+    content.innerHTML = '<div class="resp-code" style="max-height:none"><img class="resp-img" src="data:' + contentType.split(';')[0] + ';base64,' + response.base64 + '"></div>';
+    return;
+  }
+  if (filter) {
     if (looksJson(bodyText)) {
       var parsed = JSON.parse(bodyText);
       var r = jsonPathGet(parsed, filter);
       if (r.found) {
-        inner = highlightJson(JSON.stringify(r.value, null, 2));
+        inner = numberedHtml(JSON.stringify(r.value, null, 2), highlightJson);
       } else {
         inner = '<span class="muted">Path not found: ' + esc(filter) + '</span>';
       }
     } else {
       var lines = bodyText.split('\\n').filter(function (l) { return l.toLowerCase().indexOf(filter.toLowerCase()) > -1; }).slice(0, 500);
       if (lines.length === 0) inner = '<span class="muted">No matches</span>';
-      else inner = '<span class="tok-plain">' + esc(lines.join('\\n')) + '</span>';
+      else inner = numberedHtml(lines.join('\\n'), escPlain);
     }
   } else if (looksJson(bodyText)) {
-    inner = highlightJson(JSON.stringify(JSON.parse(bodyText), null, 2));
+    inner = numberedHtml(JSON.stringify(JSON.parse(bodyText), null, 2), highlightJson);
   } else if (/xml|html/i.test(contentType)) {
-    inner = highlightXml(prettyXml(bodyText));
+    inner = numberedHtml(prettyXml(bodyText), highlightXml);
   } else if (bodyText.length > 500000) {
     inner = '<span class="muted">Response too large to display (' + formatSize(bodyText.length) + '). Use Save button.</span>';
   } else {
-    inner = '<span class="tok-plain">' + esc(bodyText) + '</span>';
+    inner = numberedHtml(bodyText, escPlain);
   }
-  content.innerHTML = '<div class="resp-toolbar"><input id="respFilter" placeholder="Filter: JSON path (data.items[0].name) or text search" value="' + esc(filterText) + '"></div>' +
-    '<pre class="resp-body">' + inner + '</pre>';
-  var filterInput = $('#respFilter');
-  filterInput.addEventListener('input', function (e) {
-    filterText = e.target.value;
-    var pre = content.querySelector('.resp-body');
-    var bodyText2 = response.body || '';
-    var filter2 = filterText.trim();
-    var inner2;
-    if (!filter2) {
-      renderResponse();
-      return;
-    }
-    if (looksJson(bodyText2)) {
-      var parsed2 = JSON.parse(bodyText2);
-      var r2 = jsonPathGet(parsed2, filter2);
-      inner2 = r2.found ? highlightJson(JSON.stringify(r2.value, null, 2)) : '<span class="muted">Path not found: ' + esc(filter2) + '</span>';
-    } else {
-      var lines2 = bodyText2.split('\\n').filter(function (l) { return l.toLowerCase().indexOf(filter2.toLowerCase()) > -1; }).slice(0, 500);
-      inner2 = lines2.length ? '<span class="tok-plain">' + esc(lines2.join('\\n')) + '</span>' : '<span class="muted">No matches</span>';
-    }
-    pre.innerHTML = inner2;
-  });
+  content.innerHTML = '<div class="resp-code">' + inner + '</div>';
 }
 
 function renderRespHeaders(content) {
   var rows = response.headers.map(function (h) {
     return '<tr><td>' + esc(h.name) + '</td><td>' + esc(h.value) + '</td></tr>';
+  }).join('');
+  content.innerHTML = '<table class="resp-headers">' + rows + '</table>';
+}
+
+function renderRespCookies(content) {
+  var cookies = (response.headers || []).filter(function (h) { return /set-cookie/i.test(h.name); });
+  if (cookies.length === 0) {
+    content.innerHTML = '<div class="kp-hint">No cookies in response.</div>';
+    return;
+  }
+  var rows = cookies.map(function (h) {
+    var pair = String(h.value).split(';')[0];
+    var eq = pair.indexOf('=');
+    var name = eq > -1 ? pair.slice(0, eq) : pair;
+    var value = eq > -1 ? pair.slice(eq + 1) : '';
+    return '<tr><td>' + esc(name) + '</td><td>' + esc(value) + '</td></tr>';
   }).join('');
   content.innerHTML = '<table class="resp-headers">' + rows + '</table>';
 }
@@ -1029,7 +1119,6 @@ function send() {
 function renderAll() {
   renderMethod();
   renderEnvSelect();
-  renderTop();
   paramRows = parseUrlQuery(model.url);
   updateTabCounts();
   renderTabPanel();
@@ -1058,8 +1147,8 @@ function handleMessage(msg) {
     meta.collectionName = msg.collectionName;
     meta.saved = true;
     model.name = msg.name || model.name;
-    renderTop();
-    renderTabPanel();
+    var saveIcon = $('#saveIconBtn');
+    if (saveIcon) saveIcon.title = 'Save (Ctrl+S)';
   } else if (msg.command === 'envs') {
     meta.envs = msg.envs;
     meta.activeEnvId = msg.activeEnvId;

@@ -238,8 +238,9 @@ export async function sendRequest(req: KangposRequest, config: HttpClientConfig)
   if (body && !headers['Content-Type'] && req.body.type !== 'formdata') {
     headers['Content-Type'] = 'application/octet-stream';
   }
+  headers['Accept'] = headers['Accept'] || '*/*';
   headers['Accept-Encoding'] = headers['Accept-Encoding'] || 'gzip, deflate, br';
-  headers['User-Agent'] = headers['User-Agent'] || 'Kangpos/1.0';
+  headers['User-Agent'] = headers['User-Agent'] || 'KangPOS(@kangpos)';
 
   let method = (req.method || 'GET').toUpperCase();
   if (method === 'HEAD') delete headers['Content-Length'];
