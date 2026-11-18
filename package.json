@@ -2,7 +2,7 @@
   "name": "kangpos",
   "displayName": "Kangpos",
   "description": "Kangpos - Lightweight Rest API Client for VS Code. Rest API & GraphQL, Collections, Environments, Scriptless Testing, Code Generation, Import/Export, Run Collection & CLI.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "publisher": "kangpos",
   "license": "MIT",
   "categories": [
