@@ -38,6 +38,14 @@ Setiap commit+push = update versi + GitHub Release:
 - Smoke test: harness DOM shim di `$TMPDIR/kangpos-ui-test/harness.ts` (init, response, saved, error,
   tab headers, tab body, sidebar 3 tab) — ALL-OK; typecheck PASS
 
+### v1.0.3 (2026-11-18) — update task log
+- Riwayat v1.0.1 & v1.0.2 dicatat di task log; release v1.0.3 hanya dokumentasi
+
+### v1.0.4 (2026-11-18) — Beautify JSON body
+- Body → JSON: tombol **Beautify** kanan atas textarea (`#beautifyBtn`) → `JSON.stringify(parsed, null, 2)`
+- Error inline `#beautifyMsg` jika JSON tidak valid; pesan hilang saat mengetik
+- CSS `.kp-bodybar` / `.kp-inline-err`; tombol hanya muncul untuk body type JSON
+
 
 ## Ringkasan
 Membangun extension VSCode "kangpos" dari nol: REST client lengkap (collections, environments,

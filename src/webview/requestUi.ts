@@ -123,6 +123,9 @@ button:disabled { opacity: 0.6; cursor: default; }
 .row { display: flex; gap: 6px; margin-bottom: 6px; align-items: center; }
 .row input.row-name, .row input.row-value { background: var(--vscode-input-background, #3c3c3c); border: 1px solid var(--vscode-input-border, #3c3c3c); }
 .kp-hint { color: var(--vscode-descriptionForeground, #888); font-size: 12px; margin: 6px 0; }
+.kp-bodybar { display: flex; align-items: center; justify-content: flex-end; gap: 10px; margin-bottom: 6px; min-height: 22px; }
+.kp-bodybar button { height: 22px; font-size: 11px; padding: 0 10px; }
+.kp-inline-err { color: #e74c3c; font-size: 11px; }
 .kp-btnrow { margin-top: 8px; display: flex; gap: 8px; }
 .kp-label { font-size: 11px; color: var(--vscode-descriptionForeground, #999); margin: 8px 0 4px; text-transform: uppercase; letter-spacing: 0.4px; }
 .kp-grid { display: grid; grid-template-columns: 130px 1fr; gap: 6px; align-items: center; max-width: 720px; }
@@ -825,7 +828,11 @@ function renderBodyEditor(container) {
   if (body.type === 'none') {
     html = '<div class="kp-hint">This request does not have a body.</div>';
   } else if (body.type === 'json' || body.type === 'xml' || body.type === 'raw') {
-    html = '<textarea id="bodyRaw" rows="10" spellcheck="false"></textarea>' +
+    var isJson = body.type === 'json';
+    html = (isJson
+      ? '<div class="kp-bodybar"><span id="beautifyMsg" class="kp-inline-err"></span><button id="beautifyBtn" title="Format JSON">Beautify</button></div>'
+      : '') +
+      '<textarea id="bodyRaw" rows="10" spellcheck="false"></textarea>' +
       '<div class="kp-hint">Tip: use variables like ' + esc('{{base_url}}') + ' or dynamic ' + esc('{{$guid}}') + ', ' + esc('{{$timestamp}}') + ', ' + esc('{{$randomInt}}') + '</div>';
   } else if (body.type === 'graphql') {
     html = '<div class="kp-label">Query</div><textarea id="gqlQuery" rows="8" spellcheck="false"></textarea>' +
@@ -865,7 +872,27 @@ function renderBodyEditor(container) {
   var rawEl = container.querySelector('#bodyRaw');
   if (rawEl) {
     rawEl.value = body.raw;
-    rawEl.addEventListener('input', function (e) { body.raw = e.target.value; });
+    var beautifyMsg = container.querySelector('#beautifyMsg');
+    rawEl.addEventListener('input', function (e) {
+      body.raw = e.target.value;
+      if (beautifyMsg) beautifyMsg.textContent = '';
+    });
+    var beautifyBtn = container.querySelector('#beautifyBtn');
+    if (beautifyBtn) beautifyBtn.addEventListener('click', function () {
+      var text = rawEl.value;
+      if (!text.trim()) {
+        if (beautifyMsg) beautifyMsg.textContent = 'Nothing to format';
+        return;
+      }
+      try {
+        var parsed = JSON.parse(text);
+        body.raw = JSON.stringify(parsed, null, 2);
+        rawEl.value = body.raw;
+        if (beautifyMsg) beautifyMsg.textContent = '';
+      } catch (err) {
+        if (beautifyMsg) beautifyMsg.textContent = 'Invalid JSON: ' + (err && err.message ? err.message : 'parse error');
+      }
+    });
   }
   var gq = container.querySelector('#gqlQuery');
   if (gq) {
