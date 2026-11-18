@@ -248,7 +248,7 @@ export class RequestPanelManager {
     });
   }
 
-  async openSaved(collectionId: string, requestId: string): Promise<void> {
+  async openSaved(collectionId: string, requestId: string, autoSend = false): Promise<void> {
     const found = store.getRequest(requestId);
     if (!found) {
       void vscode.window.showInformationMessage('Kangpos: Request not found');
@@ -258,7 +258,8 @@ export class RequestPanelManager {
       request: found.request,
       requestId,
       collectionId,
-      collectionName: found.collectionName
+      collectionName: found.collectionName,
+      autoSend
     });
   }
 

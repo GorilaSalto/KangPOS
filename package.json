@@ -57,12 +57,9 @@
     "views": {
       "kangpos": [
         {
-          "id": "kangpos-collections",
-          "name": "Collections"
-        },
-        {
-          "id": "kangpos-activity",
-          "name": "Activity"
+          "type": "webview",
+          "id": "kangpos.sidebar",
+          "name": "Kangpos"
         }
       ]
     },
@@ -164,103 +161,34 @@
       }
     ],
     "menus": {
-      "view/title": [
-        {
-          "command": "kangpos.new-request",
-          "title": "New Request",
-          "when": "view == kangpos-collections",
-          "group": "navigation@1",
-          "icon": "$(add)"
-        },
-        {
-          "command": "kangpos.new-collection",
-          "title": "New Collection",
-          "when": "view == kangpos-collections",
-          "group": "navigation@2",
-          "icon": "$(new-folder)"
-        },
-        {
-          "command": "kangpos.import",
-          "title": "Import",
-          "when": "view == kangpos-collections",
-          "group": "navigation@3",
-          "icon": "$(cloud-download)"
-        },
-        {
-          "command": "kangpos.manage-envs",
-          "title": "Manage Environments",
-          "when": "view == kangpos-collections",
-          "group": "navigation@4",
-          "icon": "$(symbol-variable)"
-        },
-        {
-          "command": "kangpos.clear-activity",
-          "title": "Clear Activity",
-          "when": "view == kangpos-activity",
-          "group": "navigation@1",
-          "icon": "$(clear-all)"
-        }
-      ],
-      "view/item/context": [
-        {
-          "command": "kangpos.run-collection",
-          "title": "Run Collection",
-          "when": "view == kangpos-collections && viewItem == collection",
-          "group": "1_run@1"
-        },
-        {
-          "command": "kangpos.send-request",
-          "title": "Send Request",
-          "when": "view == kangpos-collections && viewItem == request",
-          "group": "1_run@2"
-        },
+      "commandPalette": [
         {
           "command": "kangpos.new-request-in",
-          "title": "New Request",
-          "when": "view == kangpos-collections && (viewItem == collection || viewItem == folder)",
-          "group": "2_new@1"
+          "when": "false"
         },
         {
           "command": "kangpos.new-folder-in",
-          "title": "New Folder",
-          "when": "view == kangpos-collections && (viewItem == collection || viewItem == folder)",
-          "group": "2_new@2"
-        },
-        {
-          "command": "kangpos.export-collection",
-          "title": "Export",
-          "when": "view == kangpos-collections && viewItem == collection",
-          "group": "3_data@1"
-        },
-        {
-          "command": "kangpos.copy-curl",
-          "title": "Copy as cURL",
-          "when": "view == kangpos-collections && viewItem == request",
-          "group": "3_data@2"
-        },
-        {
-          "command": "kangpos.generate-code",
-          "title": "Generate Code",
-          "when": "view == kangpos-collections && viewItem == request",
-          "group": "3_data@3"
+          "when": "false"
         },
         {
           "command": "kangpos.rename-item",
-          "title": "Rename",
-          "when": "view == kangpos-collections && (viewItem == collection || viewItem == folder || viewItem == request)",
-          "group": "4_edit@1"
+          "when": "false"
         },
         {
           "command": "kangpos.duplicate-item",
-          "title": "Duplicate",
-          "when": "view == kangpos-collections && (viewItem == collection || viewItem == folder || viewItem == request)",
-          "group": "4_edit@2"
+          "when": "false"
         },
         {
           "command": "kangpos.delete-item",
-          "title": "Delete",
-          "when": "view == kangpos-collections && (viewItem == collection || viewItem == folder || viewItem == request)",
-          "group": "5_del@1"
+          "when": "false"
+        },
+        {
+          "command": "kangpos.open-request",
+          "when": "false"
+        },
+        {
+          "command": "kangpos.open-activity",
+          "when": "false"
         }
       ]
     },

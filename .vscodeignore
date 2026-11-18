@@ -5,3 +5,6 @@ node_modules/**
 .git/**
 .fetch-client/**
 .gitignore
+tasks/**
+samples/**
+*.vsix
