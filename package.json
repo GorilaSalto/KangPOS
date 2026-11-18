@@ -1,0 +1,341 @@
+{
+  "name": "kangpos",
+  "displayName": "Kangpos",
+  "description": "Kangpos - Lightweight Rest API Client for VS Code. Rest API & GraphQL, Collections, Environments, Scriptless Testing, Code Generation, Import/Export, Run Collection & CLI.",
+  "version": "1.0.0",
+  "publisher": "kangpos",
+  "license": "MIT",
+  "categories": [
+    "Other",
+    "Testing"
+  ],
+  "keywords": [
+    "rest",
+    "api",
+    "client",
+    "postman",
+    "graphql",
+    "http",
+    "testing",
+    "kangpos"
+  ],
+  "main": "./dist/extension.js",
+  "bin": {
+    "kangpos-cli": "./dist/cli.js"
+  },
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "scripts": {
+    "preinstall": "node -e \"if (parseInt(process.versions.node, 10) !== 20) { console.error('[kangpos] Node 20 required. Run: nvm use 20'); process.exit(1); }\"",
+    "compile": "node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "typecheck": "tsc -p . --noEmit",
+    "package": "npm run typecheck && npm run compile",
+    "vsix": "npm run package && npx --yes @vscode/vsce package --no-dependencies --allow-missing-repository -o kangpos-1.0.0.vsix"
+  },
+  "dependencies": {
+    "http-proxy-agent": "^7.0.2",
+    "https-proxy-agent": "^7.0.6"
+  },
+  "devDependencies": {
+    "@types/node": "^18.19.0",
+    "@types/vscode": "^1.75.0",
+    "esbuild": "^0.21.5",
+    "typescript": "^5.4.5"
+  },
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "kangpos",
+          "title": "Kangpos",
+          "icon": "media/kangpos.svg"
+        }
+      ]
+    },
+    "views": {
+      "kangpos": [
+        {
+          "id": "kangpos-collections",
+          "name": "Collections"
+        },
+        {
+          "id": "kangpos-activity",
+          "name": "Activity"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "kangpos.new-request",
+        "title": "New Request",
+        "category": "Kangpos"
+      },
+      {
+        "command": "kangpos.new-collection",
+        "title": "New Collection",
+        "category": "Kangpos"
+      },
+      {
+        "command": "kangpos.import",
+        "title": "Import",
+        "category": "Kangpos"
+      },
+      {
+        "command": "kangpos.import-curl",
+        "title": "Import cURL",
+        "category": "Kangpos"
+      },
+      {
+        "command": "kangpos.manage-envs",
+        "title": "Manage Environments",
+        "category": "Kangpos"
+      },
+      {
+        "command": "kangpos.select-env",
+        "title": "Set Active Environment",
+        "category": "Kangpos"
+      },
+      {
+        "command": "kangpos.re-run",
+        "title": "Re-run Last Request",
+        "category": "Kangpos"
+      },
+      {
+        "command": "kangpos.run-collection",
+        "title": "Run Collection",
+        "category": "Kangpos"
+      },
+      {
+        "command": "kangpos.export-collection",
+        "title": "Export Collection",
+        "category": "Kangpos"
+      },
+      {
+        "command": "kangpos.new-request-in",
+        "title": "New Request",
+        "category": "Kangpos"
+      },
+      {
+        "command": "kangpos.new-folder-in",
+        "title": "New Folder",
+        "category": "Kangpos"
+      },
+      {
+        "command": "kangpos.rename-item",
+        "title": "Rename",
+        "category": "Kangpos"
+      },
+      {
+        "command": "kangpos.duplicate-item",
+        "title": "Duplicate",
+        "category": "Kangpos"
+      },
+      {
+        "command": "kangpos.delete-item",
+        "title": "Delete",
+        "category": "Kangpos"
+      },
+      {
+        "command": "kangpos.send-request",
+        "title": "Send Request",
+        "category": "Kangpos"
+      },
+      {
+        "command": "kangpos.copy-curl",
+        "title": "Copy as cURL",
+        "category": "Kangpos"
+      },
+      {
+        "command": "kangpos.generate-code",
+        "title": "Generate Code",
+        "category": "Kangpos"
+      },
+      {
+        "command": "kangpos.clear-activity",
+        "title": "Clear Activity",
+        "category": "Kangpos"
+      },
+      {
+        "command": "kangpos.open-request",
+        "title": "Open Request",
+        "category": "Kangpos"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "kangpos.new-request",
+          "title": "New Request",
+          "when": "view == kangpos-collections",
+          "group": "navigation@1",
+          "icon": "$(add)"
+        },
+        {
+          "command": "kangpos.new-collection",
+          "title": "New Collection",
+          "when": "view == kangpos-collections",
+          "group": "navigation@2",
+          "icon": "$(new-folder)"
+        },
+        {
+          "command": "kangpos.import",
+          "title": "Import",
+          "when": "view == kangpos-collections",
+          "group": "navigation@3",
+          "icon": "$(cloud-download)"
+        },
+        {
+          "command": "kangpos.manage-envs",
+          "title": "Manage Environments",
+          "when": "view == kangpos-collections",
+          "group": "navigation@4",
+          "icon": "$(symbol-variable)"
+        },
+        {
+          "command": "kangpos.clear-activity",
+          "title": "Clear Activity",
+          "when": "view == kangpos-activity",
+          "group": "navigation@1",
+          "icon": "$(clear-all)"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "kangpos.run-collection",
+          "title": "Run Collection",
+          "when": "view == kangpos-collections && viewItem == collection",
+          "group": "1_run@1"
+        },
+        {
+          "command": "kangpos.send-request",
+          "title": "Send Request",
+          "when": "view == kangpos-collections && viewItem == request",
+          "group": "1_run@2"
+        },
+        {
+          "command": "kangpos.new-request-in",
+          "title": "New Request",
+          "when": "view == kangpos-collections && (viewItem == collection || viewItem == folder)",
+          "group": "2_new@1"
+        },
+        {
+          "command": "kangpos.new-folder-in",
+          "title": "New Folder",
+          "when": "view == kangpos-collections && (viewItem == collection || viewItem == folder)",
+          "group": "2_new@2"
+        },
+        {
+          "command": "kangpos.export-collection",
+          "title": "Export",
+          "when": "view == kangpos-collections && viewItem == collection",
+          "group": "3_data@1"
+        },
+        {
+          "command": "kangpos.copy-curl",
+          "title": "Copy as cURL",
+          "when": "view == kangpos-collections && viewItem == request",
+          "group": "3_data@2"
+        },
+        {
+          "command": "kangpos.generate-code",
+          "title": "Generate Code",
+          "when": "view == kangpos-collections && viewItem == request",
+          "group": "3_data@3"
+        },
+        {
+          "command": "kangpos.rename-item",
+          "title": "Rename",
+          "when": "view == kangpos-collections && (viewItem == collection || viewItem == folder || viewItem == request)",
+          "group": "4_edit@1"
+        },
+        {
+          "command": "kangpos.duplicate-item",
+          "title": "Duplicate",
+          "when": "view == kangpos-collections && (viewItem == collection || viewItem == folder || viewItem == request)",
+          "group": "4_edit@2"
+        },
+        {
+          "command": "kangpos.delete-item",
+          "title": "Delete",
+          "when": "view == kangpos-collections && (viewItem == collection || viewItem == folder || viewItem == request)",
+          "group": "5_del@1"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "kangpos.re-run",
+        "key": "ctrl+alt+r",
+        "mac": "cmd+alt+r"
+      }
+    ],
+    "configuration": {
+      "title": "Kangpos",
+      "properties": {
+        "kangpos.theme": {
+          "type": "string",
+          "default": "blue",
+          "enum": [
+            "blue",
+            "red",
+            "green",
+            "purple",
+            "orange",
+            "pink",
+            "teal",
+            "dark",
+            "light"
+          ],
+          "description": "Kangpos UI theme color for request view"
+        },
+        "kangpos.requestTimeout": {
+          "type": "number",
+          "default": 0,
+          "description": "Request timeout in milliseconds (0 = no timeout)"
+        },
+        "kangpos.followRedirects": {
+          "type": "boolean",
+          "default": true,
+          "description": "Follow HTTP redirects automatically"
+        },
+        "kangpos.maxRedirects": {
+          "type": "number",
+          "default": 10,
+          "description": "Maximum number of redirects to follow"
+        },
+        "kangpos.verifySsl": {
+          "type": "boolean",
+          "default": true,
+          "description": "Verify SSL certificates"
+        },
+        "kangpos.proxy": {
+          "type": "string",
+          "default": "",
+          "description": "HTTP proxy URL e.g. http://127.0.0.1:8080 (empty = disabled)"
+        },
+        "kangpos.workspaceStorage": {
+          "type": "boolean",
+          "default": false,
+          "description": "Save Collections & Environments data in workspace .kangpos folder (backup to git). Reload window after change."
+        },
+        "kangpos.saveActivity": {
+          "type": "boolean",
+          "default": true,
+          "description": "Save request history to Activity tab"
+        },
+        "kangpos.maxActivity": {
+          "type": "number",
+          "default": 100,
+          "description": "Maximum number of activity entries to keep"
+        },
+        "kangpos.reuseTab": {
+          "type": "boolean",
+          "default": true,
+          "description": "Reuse existing tab when opening the same saved request"
+        }
+      }
+    }
+  }
+}

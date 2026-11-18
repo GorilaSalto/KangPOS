@@ -1,0 +1,6 @@
+node_modules
+dist
+*.vsix
+.fetch-client
+package-lock\.json
+task
