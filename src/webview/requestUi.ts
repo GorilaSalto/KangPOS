@@ -123,7 +123,26 @@ button:disabled { opacity: 0.6; cursor: default; }
 .row { display: flex; gap: 6px; margin-bottom: 6px; align-items: center; }
 .row input.row-name, .row input.row-value { background: var(--vscode-input-background, #3c3c3c); border: 1px solid var(--vscode-input-border, #3c3c3c); }
 .kp-hint { color: var(--vscode-descriptionForeground, #888); font-size: 12px; margin: 6px 0; }
-.kp-bodybar { display: flex; align-items: center; justify-content: flex-end; gap: 10px; margin-bottom: 6px; min-height: 22px; }
+.kp-bodytabs { display: flex; flex-wrap: wrap; gap: 18px; border-bottom: 1px solid rgba(128,128,128,0.18); margin: 2px 0 12px; }
+.kp-bodytab { padding: 6px 1px; font-size: 12.5px; color: var(--vscode-descriptionForeground, #999); cursor: pointer; border-bottom: 2px solid transparent; user-select: none; }
+.kp-bodytab:hover { color: var(--vscode-editor-foreground, #ccc); }
+.kp-bodytab.active { color: var(--vscode-editor-foreground, #fff); border-bottom-color: var(--accent); }
+.code-editor { display: flex; border: 1px solid rgba(128,128,128,0.28); border-radius: 4px; height: 340px; overflow: hidden; background: var(--vscode-input-background, #2b2b2b); margin: 6px 0 4px; }
+.code-gutter { flex: none; padding: 8px 8px 8px 10px; text-align: right; color: #636d83; font-family: var(--vscode-editor-font-family, monospace); font-size: 12px; line-height: 20px; white-space: pre; overflow: hidden; user-select: none; }
+.code-main { position: relative; flex: 1; min-width: 0; }
+.code-highlight, #bodyRaw { position: absolute; top: 0; left: 0; width: 100%; height: 100%; margin: 0; border: 0; padding: 8px 12px 8px 8px; font-family: var(--vscode-editor-font-family, monospace); font-size: 12px; line-height: 20px; white-space: pre; tab-size: 2; border-radius: 0; }
+.code-highlight { overflow: auto; pointer-events: none; color: var(--vscode-editor-foreground, #ccc); }
+.code-highlight::-webkit-scrollbar { display: none; }
+#bodyRaw { overflow: auto; resize: none; background: transparent; color: transparent; caret-color: var(--vscode-editor-foreground, #d4d4d4); }
+#bodyRaw:focus { border: 0; outline: none; }
+.code-highlight .tok-key { color: #e5a06b; }
+.code-highlight .tok-str { color: #98c379; }
+.code-highlight .tok-num { color: #c678dd; }
+.code-highlight .tok-bool, .code-highlight .tok-null { color: #c678dd; }
+.code-highlight .tok-tag { color: #98c379; }
+.code-highlight .tok-attr { color: #e5a06b; }
+.code-highlight .tok-comment { color: #7f848e; }
+.kp-bodybar { display: flex; align-items: center; justify-content: flex-start; gap: 10px; margin: 6px 0 2px; min-height: 22px; }
 .kp-bodybar button { height: 22px; font-size: 11px; padding: 0 10px; }
 .kp-inline-err { color: #e74c3c; font-size: 11px; }
 .kp-btnrow { margin-top: 8px; display: flex; gap: 8px; }
@@ -620,17 +639,16 @@ function renderTabPanel() {
 
   if (activeTab === 'body') {
     var body = model.body;
-    var types = ['none', 'json', 'form', 'formdata', 'xml', 'raw', 'binary', 'graphql'];
-    var typeLabels = { none: 'None', json: 'JSON', form: 'Form Urlencoded', formdata: 'Form Data (multipart)', xml: 'XML', raw: 'Raw', binary: 'Binary File', graphql: 'GraphQL' };
-    var html = '<div class="row"><select id="bodyType" class="kp-select-sm">';
-    types.forEach(function (t) {
-      html += '<option value="' + t + '"' + (body.type === t ? ' selected' : '') + '>' + typeLabels[t] + '</option>';
-    });
-    html += '</select></div><div id="bodyEditor"></div>';
+    var bodyTabs = [['json', 'Json'], ['xml', 'Xml'], ['raw', 'Text'], ['formdata', 'Form'], ['form', 'Form-encode'], ['graphql', 'Graphql'], ['binary', 'Binary'], ['none', 'None']];
+    var html = '<div class="kp-bodytabs">' + bodyTabs.map(function (t) {
+      return '<div class="kp-bodytab' + (body.type === t[0] ? ' active' : '') + '" data-btype="' + t[0] + '">' + t[1] + '</div>';
+    }).join('') + '</div><div id="bodyEditor"></div>';
     panel.innerHTML = html;
-    $('#bodyType').addEventListener('change', function (e) {
-      body.type = e.target.value;
-      renderTabPanel();
+    $all('.kp-bodytab').forEach(function (el) {
+      el.addEventListener('click', function () {
+        body.type = el.getAttribute('data-btype');
+        renderTabPanel();
+      });
     });
     renderBodyEditor($('#bodyEditor'));
     return;
@@ -829,10 +847,19 @@ function renderBodyEditor(container) {
     html = '<div class="kp-hint">This request does not have a body.</div>';
   } else if (body.type === 'json' || body.type === 'xml' || body.type === 'raw') {
     var isJson = body.type === 'json';
-    html = (isJson
-      ? '<div class="kp-bodybar"><span id="beautifyMsg" class="kp-inline-err"></span><button id="beautifyBtn" title="Format JSON">Beautify</button></div>'
-      : '') +
-      '<textarea id="bodyRaw" rows="10" spellcheck="false"></textarea>' +
+    var title = body.type === 'json' ? 'Json Content' : body.type === 'xml' ? 'Xml Content' : 'Text Content';
+    html = '<div class="kp-sectitle">' + title + '</div>' +
+      '<div class="code-editor">' +
+        '<div class="code-gutter" id="bodyGutter"></div>' +
+        '<div class="code-main">' +
+          '<pre class="code-highlight" id="bodyHighlight" aria-hidden="true"></pre>' +
+          '<textarea id="bodyRaw" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>' +
+        '</div>' +
+      '</div>' +
+      '<div class="kp-bodybar">' +
+        (isJson ? '<button id="beautifyBtn" title="Format JSON">Format</button>' : '') +
+        '<span id="beautifyMsg" class="kp-inline-err"></span>' +
+      '</div>' +
       '<div class="kp-hint">Tip: use variables like ' + esc('{{base_url}}') + ' or dynamic ' + esc('{{$guid}}') + ', ' + esc('{{$timestamp}}') + ', ' + esc('{{$randomInt}}') + '</div>';
   } else if (body.type === 'graphql') {
     html = '<div class="kp-label">Query</div><textarea id="gqlQuery" rows="8" spellcheck="false"></textarea>' +
@@ -873,9 +900,45 @@ function renderBodyEditor(container) {
   if (rawEl) {
     rawEl.value = body.raw;
     var beautifyMsg = container.querySelector('#beautifyMsg');
-    rawEl.addEventListener('input', function (e) {
-      body.raw = e.target.value;
+    var highlightEl = container.querySelector('#bodyHighlight');
+    var gutterEl = container.querySelector('#bodyGutter');
+    var sync = function () {
+      if (highlightEl) {
+        highlightEl.scrollTop = rawEl.scrollTop;
+        highlightEl.scrollLeft = rawEl.scrollLeft;
+      }
+      if (gutterEl) gutterEl.scrollTop = rawEl.scrollTop;
+    };
+    var paint = function () {
+      var text = rawEl.value;
+      var inner;
+      if (body.type === 'json') inner = highlightJson(text);
+      else if (body.type === 'xml') inner = highlightXml(text);
+      else inner = esc(text);
+      if (highlightEl) highlightEl.innerHTML = inner + '\\n';
+      if (gutterEl) {
+        var count = text.split('\\n').length;
+        var nums = '';
+        for (var n = 1; n <= count; n++) nums += n + '\\n';
+        gutterEl.textContent = nums;
+      }
+      sync();
+    };
+    rawEl.addEventListener('input', function () {
+      body.raw = rawEl.value;
       if (beautifyMsg) beautifyMsg.textContent = '';
+      paint();
+    });
+    rawEl.addEventListener('scroll', sync);
+    rawEl.addEventListener('keydown', function (e) {
+      if (e.key !== 'Tab') return;
+      e.preventDefault();
+      var start = rawEl.selectionStart;
+      var end = rawEl.selectionEnd;
+      rawEl.value = rawEl.value.slice(0, start) + '  ' + rawEl.value.slice(end);
+      rawEl.selectionStart = rawEl.selectionEnd = start + 2;
+      body.raw = rawEl.value;
+      paint();
     });
     var beautifyBtn = container.querySelector('#beautifyBtn');
     if (beautifyBtn) beautifyBtn.addEventListener('click', function () {
@@ -889,10 +952,12 @@ function renderBodyEditor(container) {
         body.raw = JSON.stringify(parsed, null, 2);
         rawEl.value = body.raw;
         if (beautifyMsg) beautifyMsg.textContent = '';
+        paint();
       } catch (err) {
         if (beautifyMsg) beautifyMsg.textContent = 'Invalid JSON: ' + (err && err.message ? err.message : 'parse error');
       }
     });
+    paint();
   }
   var gq = container.querySelector('#gqlQuery');
   if (gq) {

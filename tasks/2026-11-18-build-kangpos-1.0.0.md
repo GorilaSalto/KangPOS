@@ -46,6 +46,17 @@ Setiap commit+push = update versi + GitHub Release:
 - Error inline `#beautifyMsg` jika JSON tidak valid; pesan hilang saat mengetik
 - CSS `.kp-bodybar` / `.kp-inline-err`; tombol hanya muncul untuk body type JSON
 
+### v1.0.5 (2026-11-18) — Editor JSON ber-highlight ala Thunder Client
+- Body → JSON/XML/Text kini memakai editor kode: `<pre class="code-highlight">` + `<textarea id="bodyRaw">`
+  transparan di atasnya (caret tetap terlihat, undo/selection native), plus gutter nomor baris `#bodyGutter`
+- Highlight memakai ulang `highlightJson` / `highlightXml`; palet editor: key `#e5a06b`, string `#98c379`,
+  number/bool/null `#c678dd` (scoped `.code-highlight .tok-*`, response body tidak berubah)
+- Sinkron scroll (scrollTop/Left) textarea → highlight + gutter; Tab menyisipkan 2 spasi; tinggi 340px, no-wrap
+- Selector body type diganti tab row sesuai screenshot: Json, Xml, Text, Form, Form-encode, Graphql, Binary, None
+- Tombol **Beautify** → **Format** dan dipindah ke kiri bawah editor (`.kp-bodybar` justify flex-start)
+- Judul section "Json Content" / "Xml Content" / "Text Content" (`.kp-sectitle`)
+- Verifikasi: `npx tsc -p . --noEmit` PASS; harness DOM-shim 10 skenario OK (termasuk `requestUI body json editor`)
+
 
 ## Ringkasan
 Membangun extension VSCode "kangpos" dari nol: REST client lengkap (collections, environments,
