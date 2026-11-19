@@ -2,6 +2,8 @@
 
 Lightweight Rest API Client for VS Code — made with love. No setup required.
 
+![Kangpos screenshot](media/kangpos.png)
+
 > Build requirement: **Node.js 20** (`nvm use 20`, pinned via `.nvmrc`)
 
 ## Features
